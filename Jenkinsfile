@@ -26,9 +26,9 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh './jenkins/scripts/deliver.sh'
-                timeout(time: 1, unit: 'MINUTES') {
-                        sh 'sleep 60'
-                }
+                // timeout(time: 1, unit: 'MINUTES') {
+                //         sh 'sleep 60'
+                // }
                 sh './jenkins/scripts/kill.sh'
             }
         }
