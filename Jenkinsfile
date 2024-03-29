@@ -25,12 +25,9 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                timeout(time: 60, unit: 'SECONDS') {
                 sh './jenkins/scripts/deliver.sh'
-                    for (int i = 1; i <= 60; i++) {
-                        echo "Detik ke-${i}"
-                        sh 'sleep 1'
-                    }
+                timeout(time: 1, unit: 'MINUTES') {
+                        sh 'sleep 60'
                 }
                 sh './jenkins/scripts/kill.sh'
             }
