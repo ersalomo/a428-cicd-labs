@@ -19,15 +19,18 @@ pipeline {
         stage('Manual Approval') {
             steps {
                 script {
-                    input message: 'Lanjutkan ke tahap Deploy? (Klik "Proceed" untuk mengakhiri)'
+                    input message: 'Lanjutkan ke tahap Deploy? (Klik "Proceed" untuk melanjutkan)'
                 }
             }
         }
         stage('Deploy') {
             steps {
+                timeout(time: 60, unit: 'SECONDS') {
                 sh './jenkins/scripts/deliver.sh'
-                timeout(time: 1, unit: 'MINUTES') {
-                    sh 'sleep 60'
+                    for (int i = 1; i <= 60; i++) {
+                        echo "Detik ke-${i}"
+                        sh 'sleep 1'
+                    }
                 }
                 sh './jenkins/scripts/kill.sh'
             }
