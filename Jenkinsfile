@@ -26,9 +26,9 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh './jenkins/scripts/deliver.sh'
-                // timeout(time: 1, unit: 'MINUTES') {
-                //         sh 'sleep 60'
-                // }
+                def time = 60 // Mengatur waktu penundaan menjadi 60 detik
+                echo "Menunggu ${time} detik untuk penyelesaian deployment sebelum memulai pengujian asap"
+                sleep time
                 sh './jenkins/scripts/kill.sh'
             }
         }
